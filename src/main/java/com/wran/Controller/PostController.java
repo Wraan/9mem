@@ -47,7 +47,7 @@ public class PostController {
         Post newPost = postService.convertFromDao(post);
 
         if(newPost == null) {
-            model.addAttribute("error", "Error while uploadring a post. Please try again");
+            model.addAttribute("error", "Error while uploading a post. Please try again");
             return "uploadPost";
         }
 
