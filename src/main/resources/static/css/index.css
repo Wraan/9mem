@@ -1,0 +1,17 @@
+body {
+  padding-top: 50px;
+}
+.header {
+  padding: 40px 15px;
+  text-align: center;
+}
+.crop {
+    overflow: hidden;
+}
+.crop img {
+    height: auto;
+    width: 90%;
+}
+nav.ul a:hover{
+    text-decoration: none !important;
+}
