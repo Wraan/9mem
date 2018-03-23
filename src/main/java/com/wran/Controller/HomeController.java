@@ -4,6 +4,8 @@ import com.wran.Model.User;
 import com.wran.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -33,11 +35,16 @@ public class HomeController {
     }
 
     @GetMapping("/loginSuccess")
-    public String loginSuccess(Model model, HttpSession session, Principal principal){
+    public String loginSuccess(Model model, HttpSession session, @AuthenticationPrincipal User user){
         //Dodanie uzytkownika do sesji
+//        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        System.out.println(user.getEmail());
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String name = auth.getName();
+        System.out.println(user.getEmail());
+
+
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        String name = auth.getName();
 
         return "redirect:/";
     }

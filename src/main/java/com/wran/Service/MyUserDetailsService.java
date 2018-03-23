@@ -1,7 +1,7 @@
 package com.wran.Service;
 
 import com.wran.Model.User;
-import com.wran.Model.UserRole;
+import com.wran.Model.Security.UserRole;
 import com.wran.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,25 +22,36 @@ public class MyUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
         User user = userRepository.findByUsername(username);
-        if(user == null){
-            throw new UsernameNotFoundException("No user found with username: " + username);
-        }
-        boolean enabled = true;
-        boolean accountNonExpired = true;
-        boolean credentialsNonExpired = true;
-        boolean accountNonLocked = true;
-        return  new org.springframework.security.core.userdetails.User
-                (user.getUsername(),
-                        user.getPassword(), enabled, accountNonExpired,
-                        credentialsNonExpired, accountNonLocked,
-                        getAuthorities(user.getUserRoles()));
-    }
-    private static List<GrantedAuthority> getAuthorities (List<UserRole> userRoles) {
-        List<GrantedAuthority> authorities = new ArrayList<>();
 
-        userRoles.forEach(ur -> authorities.add(new SimpleGrantedAuthority(ur.getRole().getRoleName())));
+        if (user == null)
+            throw new UsernameNotFoundException("Username: " + username + " has benn not found.");
 
-        return authorities;
+        return user;
     }
+//
+//
+//
+//        User user = userRepository.findByUsername(username);
+//        if(user == null){
+//            throw new UsernameNotFoundException("No user found with username: " + username);
+//        }
+//        boolean enabled = true;
+//        boolean accountNonExpired = true;
+//        boolean credentialsNonExpired = true;
+//        boolean accountNonLocked = true;
+//        return  new org.springframework.security.core.userdetails.User
+//                (user.getUsername(),
+//                        user.getPassword(), enabled, accountNonExpired,
+//                        credentialsNonExpired, accountNonLocked,
+//                        getAuthorities(user.getUserRoles()));
+//    }
+//    private static List<GrantedAuthority> getAuthorities (List<UserRole> userRoles) {
+//        List<GrantedAuthority> authorities = new ArrayList<>();
+//
+//        userRoles.forEach(ur -> authorities.add(new SimpleGrantedAuthority(ur.getRole().getRoleName())));
+//
+//        return authorities;
+//    }
 }

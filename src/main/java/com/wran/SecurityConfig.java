@@ -27,6 +27,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder(12, new SecureRandom(SALT.getBytes()));
     }
 
+//    @Bean
+//    public SpringSecurityDialect springSecurityDialect(){
+//        return new SpringSecurityDialect();
+//    }
+
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());

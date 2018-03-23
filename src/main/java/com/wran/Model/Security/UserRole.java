@@ -1,4 +1,7 @@
-package com.wran.Model;
+package com.wran.Model.Security;
+
+import com.wran.Model.Security.Role;
+import com.wran.Model.User;
 
 import javax.persistence.*;
 

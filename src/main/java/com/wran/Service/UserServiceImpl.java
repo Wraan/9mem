@@ -2,7 +2,7 @@ package com.wran.Service;
 
 import com.wran.Model.User;
 import com.wran.Model.UserDto;
-import com.wran.Model.UserRole;
+import com.wran.Model.Security.UserRole;
 import com.wran.Repository.RoleRepository;
 import com.wran.Repository.UserRepository;
 import com.wran.Validator.UserExistsException;

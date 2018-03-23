@@ -1,4 +1,4 @@
-package com.wran.Model;
+package com.wran.Model.Security;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ public class Role {
 
     private String roleName;
 
-    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<UserRole> userRoles = new ArrayList<>();
 
     public Role(){}
