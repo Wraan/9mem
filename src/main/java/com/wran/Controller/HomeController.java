@@ -28,7 +28,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String showHomePage(Model model){
-        List<Post> posts = postService.getPostsInRange(0,2);
+        List<Post> posts = postService.getPostsInRange(0,10);
         List<PostDto> postDtoList = postService.convertPostListToDto(posts);
 
         model.addAttribute("posts", postDtoList);
@@ -36,7 +36,7 @@ public class HomeController {
     }
     @GetMapping("/page/{page}")
     public String showPage(@PathVariable("page") int page, Model model){
-        List<Post> posts = postService.getPostsInRange((page-1)*2 ,2);
+        List<Post> posts = postService.getPostsInRange((page-1)*10 ,10);
         List<PostDto> postDtoList = postService.convertPostListToDto(posts);
 
         model.addAttribute("posts", postDtoList);

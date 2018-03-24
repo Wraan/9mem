@@ -64,17 +64,11 @@ public class PostController {
         return "redirect:/postUploadedSuccessfully";
     }
 
-    @GetMapping("postUploadedSuccessfully")
+    @GetMapping("/postUploadedSuccessfully")
     public String showUploadedPost(@AuthenticationPrincipal User user){
         Post post = postService.getLatestPostById(user.getId());
 
         return "redirect:/post/" + post.getId();
     }
 
-    @GetMapping("/test")
-    public String test(){
-        List<Post> posts = postService.getPostsInRange(2, 5);
-
-        return "index";
-    }
 }

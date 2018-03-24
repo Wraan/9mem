@@ -53,11 +53,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/register"
     };
 
+    private static final String[] LOGGED_MATCHERS = {
+            "/uploadPost",
+            "/postUploadedSuccessfully",
+
+    };
+
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         http
                 .authorizeRequests()
                 .antMatchers("/admin").hasRole("ADMIN")
+                .antMatchers(LOGGED_MATCHERS).hasAnyRole("ADMIN", "USER")
                 .and()
                 .formLogin()
                 .loginPage("/login")
