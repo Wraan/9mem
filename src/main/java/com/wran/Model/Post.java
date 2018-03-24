@@ -16,6 +16,10 @@ public class Post {
     @Lob
     private byte[] image;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User user;
+
 
     public byte[] getImage() {
         return image;
@@ -39,6 +43,14 @@ public class Post {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
 

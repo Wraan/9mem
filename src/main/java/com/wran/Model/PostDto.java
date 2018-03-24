@@ -6,7 +6,11 @@ public class PostDto {
 
     private String title;
 
+    private long id;
+
     private MultipartFile image;
+
+    private String author;
 
     public String getBase64image() {
         return base64image;
@@ -34,4 +38,19 @@ public class PostDto {
         this.title = title;
     }
 
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 }

@@ -5,6 +5,7 @@ import com.wran.Model.UserDto;
 import com.wran.Service.UserService;
 import com.wran.Validator.UserExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,17 +22,18 @@ public class RegisterController {
     UserService userService;
 
     @GetMapping("/register")
-    public String showRegistration(Model model){
+    public String showRegistration(Model model, @AuthenticationPrincipal User user){
+        if(user != null)
+            return "redirect:/";
         model.addAttribute("user", new UserDto());
         return "register";
     }
 
     @PostMapping("/register")
     public String registerUser(@ModelAttribute("user") @Valid UserDto user, BindingResult result, Model model){
-        User registered = new User();
         if(!result.hasErrors()){
             try {
-                registered = userService.registerNewUser(user);
+                userService.registerNewUser(user);
             }catch(UserExistsException e){
                 model.addAttribute("user", new UserDto());
                 model.addAttribute("userError", e.getMessage());
