@@ -11,6 +11,8 @@ public class Post {
     @Column(name = "post_id")
     private long id;
 
+    private boolean accepted;
+
     private String title;
 
     @Lob
@@ -51,6 +53,14 @@ public class Post {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public boolean isAccepted() {
+        return accepted;
+    }
+
+    public void setAccepted(boolean accepted) {
+        this.accepted = accepted;
     }
 
 

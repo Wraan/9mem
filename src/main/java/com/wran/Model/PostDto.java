@@ -12,6 +12,8 @@ public class PostDto {
 
     private String author;
 
+    private boolean accepted;
+
     public String getBase64image() {
         return base64image;
     }
@@ -52,5 +54,13 @@ public class PostDto {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public boolean isAccepted() {
+        return accepted;
+    }
+
+    public void setAccepted(boolean accepted) {
+        this.accepted = accepted;
     }
 }

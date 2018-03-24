@@ -29,7 +29,7 @@ public class User implements UserDetails{
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<UserRole> userRoles = new HashSet<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH ,CascadeType.REMOVE}, orphanRemoval=true, fetch = FetchType.EAGER)
     private Set<Post> posts = new HashSet<>();
 
     public Set<UserRole> getUserRoles() {

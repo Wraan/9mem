@@ -10,13 +10,21 @@ public interface PostService {
 
     void save(Post post);
 
+    void delete(Post post);
+
     Post convertFromDto(PostDto post);
 
     byte[] findImageById(long id);
 
     Post getLatestPostById(long id);
 
-    List<Post> getPostsInRange(int start, int stop);
+    List<Post> getAcceptedPostsInRange(int start, int stop);
+
+    List<Post> getNotAcceptedPostsInRange(int start, int stop);
 
     List<PostDto> convertPostListToDto(List<Post> postList);
+
+    PostDto convertPostToDto(Post post);
+
+    void deletePostById(long id);
 }

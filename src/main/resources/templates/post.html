@@ -29,9 +29,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav mr-auto">
-                <a class="nav-item nav-link active" href="/">Hot<span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" href="#">New</a>
-                <a class="nav-item nav-link" href="#">Contact</a>
+                <a class="nav-item nav-link text-light" th:href="@{/}">Hot</a>
+                <a class="nav-item nav-link text-light" th:href="@{/new}">New</a>
+                <a class="nav-item nav-link text-light" href="#">Contact</a>
             </div>
 
             <div class="dropdown show">
@@ -70,19 +70,20 @@
         </div>
         <div class="header col-8 ">
             <div th:object="${post}" class="text-left crop">
-                <h4 class=""><a class="text-dark" href="post.html" th:text="*{title}"></a></h4>
-                <img class="img-responsive" th:src="'data:image/jpeg;base64,'+*{base64image}">
-                <a class="text-dark" href="#" th:text="'Author: ' + *{author}">author</a>
-                <br />
+                <h4 class="text-dark" th:text="*{title}">Title</h4>
+                <img class="img-responsive" th:src="'data:image/jpeg;base64,' + *{base64image}">
+                <p class="text-dark mt-3" th:text="'Author: ' + *{author}">Author</p>
                 <div class="my-2">
-                    <a class="text-dark" href="#">x points</a>
+                    <a class="text-dark">x points</a>
                     <label>|</label>
-                    <a class="text-dark" href="#">x comments</a>
+                    <a class="text-dark" href="#comments">x comments</a>
                 </div>
                 <div>
                     <button style="width: 12%" class="btn btn-secondary" href="#"><i class="fas fa-arrow-circle-up fa-fw"></i></button>
                     <button style="width: 12%" class="btn btn-secondary" href="#"><i class="fas fa-arrow-circle-down fa-fw"></i></button>
                     <button style="width: 12%" class="btn btn-secondary" href="#"><i class="fas fa-comments fa-fw"></i></button>
+                    <a sec:authorize="hasRole('ADMIN')" th:if="*{!accepted}" style="width: 12%" role="button" class="btn btn-danger text-right" th:href="@{'/accept/' + ${post.id}}">Accept</a>
+                    <a sec:authorize="hasRole('ADMIN')" style="width: 12%" role="button" class="btn btn-danger text-right" th:href="@{'/delete/' + ${post.id}}">Delete</a>
                 </div>
             </div>
         </div>

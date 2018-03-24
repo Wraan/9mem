@@ -7,8 +7,8 @@ import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.io.IOException;
@@ -32,12 +32,15 @@ public class PostServiceImpl implements PostService {
         postRepository.save(post);
     }
 
+    @Override
+    public void delete(Post post) {
+        postRepository.delete(post);
+    }
+
     public Post convertFromDto(PostDto post) {
         Post newPost = new Post();
         newPost.setTitle(post.getTitle());
 
-
-        String extension = post.getImage().getContentType();
         String[] parts = post.getImage().getContentType().split("/");
 
         if(!parts[0].equals("image"))
@@ -65,8 +68,8 @@ public class PostServiceImpl implements PostService {
         return pages.getContent().get(0);
     }
 
-    public List<Post> getPostsInRange(int start, int stop){
-        String sql = "Select p from Post p order by p.id desc";
+    public List<Post> getAcceptedPostsInRange(int start, int stop){
+        String sql = "Select p from Post p where p.accepted = 1 order by p.id desc";
         List<Post> result = new ArrayList<>();
 
         result.addAll(entityManager.createQuery(sql).setFirstResult(start).setMaxResults(stop).getResultList());
@@ -74,9 +77,18 @@ public class PostServiceImpl implements PostService {
         return result;
     }
 
-    @Override
+    public List<Post> getNotAcceptedPostsInRange(int start, int stop){
+        String sql = "Select p from Post p where p.accepted = 0 order by p.id desc";
+        List<Post> result = new ArrayList<>();
+
+        result.addAll(entityManager.createQuery(sql).setFirstResult(start).setMaxResults(stop).getResultList());
+
+        return result;
+    }
+
     public List<PostDto> convertPostListToDto(List<Post> postList) {
         List<PostDto> postDtoList = new ArrayList<>();
+
         for (Post post:postList){
             PostDto postDto = new PostDto();
 
@@ -84,9 +96,28 @@ public class PostServiceImpl implements PostService {
             postDto.setTitle(post.getTitle());
             postDto.setBase64image(new String(Base64.encodeBase64(post.getImage())));
             postDto.setId(post.getId());
+            postDto.setAccepted(post.isAccepted());
 
             postDtoList.add(postDto);
         }
         return postDtoList;
+    }
+
+    @Override
+    public PostDto convertPostToDto(Post post) {
+        PostDto postDto = new PostDto();
+
+        postDto.setId(post.getId());
+        postDto.setAccepted(post.isAccepted());
+        postDto.setTitle(post.getTitle());
+        postDto.setAuthor(post.getUser().getUsername());
+        postDto.setBase64image(new String(Base64.encodeBase64(post.getImage())));
+
+        return postDto;
+    }
+
+    @Transactional
+    public void deletePostById(long id) {
+        postRepository.delete(postRepository.findById(id));
     }
 }

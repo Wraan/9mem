@@ -4,16 +4,12 @@ import com.wran.Model.Post;
 import com.wran.Model.PostDto;
 import com.wran.Model.User;
 import com.wran.Service.PostService;
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.List;
 
 @Controller
 public class PostController {
@@ -28,14 +24,10 @@ public class PostController {
         if(post == null)
             return "postNotFound";
 
-        PostDto postdto = new PostDto();
-        postdto.setTitle(post.getTitle());
-        postdto.setBase64image(new String(Base64.encodeBase64(post.getImage())));
-        postdto.setAuthor(post.getUser().getUsername());
-
+        PostDto postdto = postService.convertPostToDto(post);
         model.addAttribute("post", postdto);
-        return "post";
 
+        return "post";
     }
 
     @GetMapping("/post")
@@ -59,6 +51,7 @@ public class PostController {
         }
 
         newPost.setUser(user);
+        newPost.setAccepted(false);
         postService.save(newPost);
 
         return "redirect:/postUploadedSuccessfully";
@@ -69,6 +62,21 @@ public class PostController {
         Post post = postService.getLatestPostById(user.getId());
 
         return "redirect:/post/" + post.getId();
+    }
+
+    @GetMapping("/accept/{id}")
+    public String acceptPost(@PathVariable("id") long id){
+        Post post = postService.findById(id);
+        post.setAccepted(true);
+        postService.save(post);
+        return "redirect:/new";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deletePost(@PathVariable("id") long id){
+        System.out.println("USUWAM");
+        postService.deletePostById(id);
+        return "redirect:/";
     }
 
 }
