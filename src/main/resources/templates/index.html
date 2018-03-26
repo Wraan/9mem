@@ -78,7 +78,7 @@
               <a th:href="@{'/post/' + ${post.id}}"><img class="img-responsive" th:src="'data:image/jpeg;base64,'+${post.base64image}"></a>
               <br />
               <div class="my-2">
-                  <a class="text-dark" href="#">x points</a>
+                  <a class="text-dark" href="#">x point s</a>
                   <label>|</label>
                   <a class="text-dark" th:href="@{'/post/' + ${post.id} + '#comments'}">x comments</a>
               </div>
@@ -86,11 +86,21 @@
                   <button style="width: 12%" class="btn btn-secondary" href="#"><i class="fas fa-arrow-circle-up fa-fw"></i></button>
                   <button style="width: 12%" class="btn btn-secondary" href="#"><i class="fas fa-arrow-circle-down fa-fw"></i></button>
                   <button style="width: 12%" class="btn btn-secondary" href="#"><i class="fas fa-comments fa-fw"></i></button>
-                  <a sec:authorize="hasRole('ADMIN')" th:if="${!post.accepted}" style="width: 12%" role="button" class="btn btn-danger text-right" th:href="@{'/accept/' + ${post.id}}">Accept</a>
-                  <a sec:authorize="hasRole('ADMIN')" style="width: 12%" role="button" class="btn btn-danger text-right" th:href="@{'/delete/' + ${post.id}}">Delete</a>
+                  <div class="float-right mr-5">
+                    <a sec:authorize="hasRole('ADMIN')" th:if="${!post.accepted}" role="button" class="btn btn-danger text-right" th:href="@{'/accept/' + ${post.id}}">Accept</a>
+                    <a sec:authorize="hasRole('ADMIN')" role="button" class="btn btn-danger text-right" th:href="@{'/delete/' + ${post.id}}">Delete</a>
+                  </div>
               </div>
             </div>
           </div>
+          <nav>
+              <hr class="my-3">
+              <ul class="pagination justify-content-center my-3">
+                  <li th:each="pn: ${pnList}" class="page-item" th:classappend="${pn.current} ? active ">
+                      <a class="page-link" th:text="${pn.text}" th:href="@{'/page/' + ${pn.page}}">Page</a>
+                  </li>
+              </ul>
+          </nav>
       </div>
       </div>
   </div>

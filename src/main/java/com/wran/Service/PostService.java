@@ -1,5 +1,6 @@
 package com.wran.Service;
 
+import com.wran.Model.PageNavigator;
 import com.wran.Model.Post;
 import com.wran.Model.PostDto;
 
@@ -27,4 +28,6 @@ public interface PostService {
     PostDto convertPostToDto(Post post);
 
     void deletePostById(long id);
+
+    List<PageNavigator> getPageList(int id);
 }

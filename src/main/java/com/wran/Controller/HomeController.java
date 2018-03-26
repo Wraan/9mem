@@ -1,5 +1,6 @@
 package com.wran.Controller;
 
+import com.wran.Model.PageNavigator;
 import com.wran.Model.Post;
 import com.wran.Model.PostDto;
 import com.wran.Model.User;
@@ -23,14 +24,22 @@ public class HomeController {
         List<Post> posts = postService.getAcceptedPostsInRange(0,10);
         List<PostDto> postDtoList = postService.convertPostListToDto(posts);
 
+        List<PageNavigator> pnList = postService.getPageList(1);
+
+        model.addAttribute("pnList", pnList);
         model.addAttribute("posts", postDtoList);
         return "index";
     }
     @GetMapping("/page/{page}")
     public String showNextPage(@PathVariable("page") int page, Model model){
+        if(page < 1)
+            return "redirect:/";
+
         List<Post> posts = postService.getAcceptedPostsInRange((page-1)*10 ,10);
         List<PostDto> postDtoList = postService.convertPostListToDto(posts);
+        List<PageNavigator> pnList = postService.getPageList(page);
 
+        model.addAttribute("pnList", pnList);
         model.addAttribute("posts", postDtoList);
         return "index";
     }
@@ -52,16 +61,22 @@ public class HomeController {
     public String showNewPage(Model model){
         List<Post> posts = postService.getNotAcceptedPostsInRange(0,10);
         List<PostDto> postDtoList = postService.convertPostListToDto(posts);
+        List<PageNavigator> pnList = postService.getPageList(1);
 
+        model.addAttribute("pnList", pnList);
         model.addAttribute("posts", postDtoList);
         return "index";
     }
 
     @GetMapping("/new/{page}")
     public String showNewNextPage(@PathVariable("page") int page, Model model){
+        if(page < 1)
+            return "redirect:/new/1";
         List<Post> posts = postService.getNotAcceptedPostsInRange((page-1)*10 ,10);
         List<PostDto> postDtoList = postService.convertPostListToDto(posts);
+        List<PageNavigator> pnList = postService.getPageList(page);
 
+        model.addAttribute("pnList", pnList);
         model.addAttribute("posts", postDtoList);
         return "index";
     }

@@ -1,5 +1,6 @@
 package com.wran.Service;
 
+import com.wran.Model.PageNavigator;
 import com.wran.Model.Post;
 import com.wran.Model.PostDto;
 import com.wran.Repository.PostRepository;
@@ -119,5 +120,44 @@ public class PostServiceImpl implements PostService {
     @Transactional
     public void deletePostById(long id) {
         postRepository.delete(postRepository.findById(id));
+    }
+
+    @Override
+    public List<PageNavigator> getPageList(int id) {
+        List<PageNavigator> list = new ArrayList<>();
+
+        //Getting list of PageNavigators in rage +- 5 from id
+        int i = id - 5;
+        if(i < 1) i = 1;
+
+        if(id != 1) {
+            PageNavigator prev = new PageNavigator();
+            prev.setCurrent(false);
+            prev.setText("Previous");
+            prev.setPage(id - 1);
+            list.add(prev);
+        }
+
+        while(i <= id + 5){
+            PageNavigator pn = new PageNavigator();
+            pn.setPage(i);
+            pn.setText(Integer.toString(i));
+
+            if(i == id)
+                pn.setCurrent(true);
+            else
+                pn.setCurrent(false);
+
+            list.add(pn);
+            i++;
+        }
+        PageNavigator next = new PageNavigator();
+        next.setCurrent(false);
+        next.setText("Next");
+        next.setPage(id + 1);
+        list.add(next);
+
+
+        return list;
     }
 }

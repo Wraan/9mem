@@ -42,7 +42,7 @@ public class PostController {
     }
 
     @PostMapping("/uploadPost")
-    public String uploadPost(@ModelAttribute("post") PostDto post, Model model, RedirectAttributes ra, @AuthenticationPrincipal User user){
+    public String uploadPost(@ModelAttribute("post") PostDto post, Model model, @AuthenticationPrincipal User user){
         Post newPost = postService.convertFromDto(post);
 
         if(newPost == null) {
@@ -74,7 +74,6 @@ public class PostController {
 
     @GetMapping("/delete/{id}")
     public String deletePost(@PathVariable("id") long id){
-        System.out.println("USUWAM");
         postService.deletePostById(id);
         return "redirect:/";
     }

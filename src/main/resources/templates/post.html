@@ -82,14 +82,21 @@
                     <button style="width: 12%" class="btn btn-secondary" href="#"><i class="fas fa-arrow-circle-up fa-fw"></i></button>
                     <button style="width: 12%" class="btn btn-secondary" href="#"><i class="fas fa-arrow-circle-down fa-fw"></i></button>
                     <button style="width: 12%" class="btn btn-secondary" href="#"><i class="fas fa-comments fa-fw"></i></button>
-                    <a sec:authorize="hasRole('ADMIN')" th:if="*{!accepted}" style="width: 12%" role="button" class="btn btn-danger text-right" th:href="@{'/accept/' + ${post.id}}">Accept</a>
-                    <a sec:authorize="hasRole('ADMIN')" style="width: 12%" role="button" class="btn btn-danger text-right" th:href="@{'/delete/' + ${post.id}}">Delete</a>
+                    <div class="float-right mr-5">
+                        <a sec:authorize="hasRole('ADMIN')" th:if="*{!accepted}" role="button" class="btn btn-danger text-center" th:href="@{'/accept/' + ${post.id}}">Accept</a>
+                        <a sec:authorize="hasRole('ADMIN')"  role="button" class="btn btn-danger text-center" th:href="@{'/delete/' + ${post.id}}">Delete</a>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-10 offset-1">
             <h5 id="comments">x Comments</h5>
             <hr class="my-3">
+            <div sec:authorize="isAuthenticated()" class="form-group">
+                <label for="comment">Comment:</label>
+                <textarea class="form-control" rows="5" id="comment"></textarea>
+                <a style="width: 12%" role="button" class="btn btn-primary text-center" href="#">Submit</a>
+            </div>
             <div class="mb-3">
                 <div class="col-1">
                     <img style="width: 100%" src="https://scontent-waw1-1.xx.fbcdn.net/v/t1.0-9/1525012_572372122838819_575621846_n.jpg?_nc_eui2=v1%3AAeFOuRBR3Eezd5UyVuteHiTIO68H8KyutFxvQIFKcgUqtwugxLHBiR8kY8U6ChsmDG9sBdo6J_ySb4p4xCvyXpyUgfNaW9gr2xWcWw-2UBNaWA&oh=8122b73dc46f14daf77ee98dc3b34646&oe=5B321D2F"
