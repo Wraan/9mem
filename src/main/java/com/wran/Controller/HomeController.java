@@ -4,6 +4,7 @@ import com.wran.Model.PageNavigator;
 import com.wran.Model.Post;
 import com.wran.Model.PostDto;
 import com.wran.Model.User;
+import com.wran.Repository.PostRepository;
 import com.wran.Service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,12 +20,15 @@ public class HomeController {
     @Autowired
     PostService postService;
 
+    @Autowired
+    PostRepository postRepository;
+
     @GetMapping("/")
     public String showHomePage(Model model){
         List<Post> posts = postService.getAcceptedPostsInRange(0,10);
         List<PostDto> postDtoList = postService.convertPostListToDto(posts);
 
-        List<PageNavigator> pnList = postService.getPageList(1);
+        List<PageNavigator> pnList = postService.getPageNavigatorList(1);
 
         model.addAttribute("pnList", pnList);
         model.addAttribute("posts", postDtoList);
@@ -37,7 +41,7 @@ public class HomeController {
 
         List<Post> posts = postService.getAcceptedPostsInRange((page-1)*10 ,10);
         List<PostDto> postDtoList = postService.convertPostListToDto(posts);
-        List<PageNavigator> pnList = postService.getPageList(page);
+        List<PageNavigator> pnList = postService.getPageNavigatorList(page);
 
         model.addAttribute("pnList", pnList);
         model.addAttribute("posts", postDtoList);
@@ -61,7 +65,7 @@ public class HomeController {
     public String showNewPage(Model model){
         List<Post> posts = postService.getNotAcceptedPostsInRange(0,10);
         List<PostDto> postDtoList = postService.convertPostListToDto(posts);
-        List<PageNavigator> pnList = postService.getPageList(1);
+        List<PageNavigator> pnList = postService.getPageNavigatorList(1);
 
         model.addAttribute("pnList", pnList);
         model.addAttribute("posts", postDtoList);
@@ -74,9 +78,24 @@ public class HomeController {
             return "redirect:/new/1";
         List<Post> posts = postService.getNotAcceptedPostsInRange((page-1)*10 ,10);
         List<PostDto> postDtoList = postService.convertPostListToDto(posts);
-        List<PageNavigator> pnList = postService.getPageList(page);
+        List<PageNavigator> pnList = postService.getPageNavigatorList(page);
 
         model.addAttribute("pnList", pnList);
+        model.addAttribute("posts", postDtoList);
+        return "index";
+    }
+
+    @PostMapping("/searchTag")
+    public String searchPostsWithTag(@RequestParam("searchTag") String tag){
+        return "redirect:/tags/" + tag.trim();
+    }
+
+    @GetMapping("/tags/{tag}")
+    public String showPostsWithTag(@PathVariable("tag") String tag, Model model){
+
+        List<Post> posts = postRepository.findByTag(tag);
+        List<PostDto> postDtoList = postService.convertPostListToDto(posts);
+
         model.addAttribute("posts", postDtoList);
         return "index";
     }

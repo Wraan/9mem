@@ -9,15 +9,13 @@ import java.util.List;
 public interface PostService {
     Post findById(long id);
 
-    void save(Post post);
+    Post save(Post post);
 
     void delete(Post post);
 
     Post convertFromDto(PostDto post);
 
     byte[] findImageById(long id);
-
-    Post getLatestPostById(long id);
 
     List<Post> getAcceptedPostsInRange(int start, int stop);
 
@@ -29,5 +27,5 @@ public interface PostService {
 
     void deletePostById(long id);
 
-    List<PageNavigator> getPageList(int id);
+    List<PageNavigator> getPageNavigatorList(int id);
 }

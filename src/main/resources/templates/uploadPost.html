@@ -33,12 +33,11 @@
                 <a class="nav-item nav-link text-light" th:href="@{/new}">New</a>
                 <a class="nav-item nav-link text-light" href="#">Contact</a>
             </div>
-
             <div class="dropdown show">
                 <a class="nav-item m-2" id="dropdownSearch" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#"><i style="color: white" class="fas fa-search icon-white"></i></a>
                 <div style="padding:0px 0px" class="dropdown-menu " aria-labelledby="dropdownSearch">
-                    <form>
-                        <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                    <form method="post" th:action="@{/searchTag}">
+                        <input name="searchTag" class="form-control" type="search" placeholder="Search" aria-label="Search">
                     </form>
                 </div>
             </div>
@@ -78,6 +77,23 @@
                     </div>
                     <div class="text-center mt-3">
                         <input type="file" accept="image/*" placeholder="Select file" th:field="*{image}" required>
+                    </div>
+                    <div class="mt-3 text-center">
+                        <div style = "width: 60%" class="input-group my-2">
+                            <input type="text" class="form-control" placeholder="Tag 1" th:field="*{tagsDto.tag1}"/>
+                        </div>
+                        <div style = "width: 60%" class="input-group my-2">
+                            <input type="text" class="form-control" placeholder="Tag 2" th:field="*{tagsDto.tag2}"/>
+                        </div>
+                        <div style = "width: 60%" class="input-group my-2">
+                            <input type="text" class="form-control" placeholder="Tag 3" th:field="*{tagsDto.tag3}"/>
+                        </div>
+                        <div style = "width: 60%" class="input-group my-2">
+                            <input type="text" class="form-control" placeholder="Tag 4" th:field="*{tagsDto.tag4}"/>
+                        </div>
+                        <div style = "width: 60%" class="input-group my-2">
+                            <input type="text" class="form-control" placeholder="Tag 5" th:field="*{tagsDto.tag5}"/>
+                        </div>
                     </div>
                     <button class="btn btn-lg btn-primary btn-block mt-5" type="submit">Upload</button>
                     <h5 th:if="${error} != null" th:text="${error}"></h5>

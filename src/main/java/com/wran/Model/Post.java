@@ -1,6 +1,10 @@
 package com.wran.Model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "posts")
@@ -21,6 +25,9 @@ public class Post {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<PostTag> postTags = new HashSet<>();
 
 
     public byte[] getImage() {
@@ -63,9 +70,11 @@ public class Post {
         this.accepted = accepted;
     }
 
+    public Set<PostTag> getPostTags() {
+        return postTags;
+    }
 
-    //private Set<String> tags = new HashSet<>();
-
-    //private Set<Comment> comments;
-
+    public void setPostTags(Set<PostTag> postTags) {
+        this.postTags = postTags;
+    }
 }

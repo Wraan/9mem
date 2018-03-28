@@ -2,6 +2,8 @@ package com.wran.Model;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Set;
+
 public class PostDto {
 
     private String title;
@@ -13,6 +15,9 @@ public class PostDto {
     private String author;
 
     private boolean accepted;
+
+    private TagsDto tagsDto;
+    private Set<PostTag> postTags;
 
     public String getBase64image() {
         return base64image;
@@ -62,5 +67,21 @@ public class PostDto {
 
     public void setAccepted(boolean accepted) {
         this.accepted = accepted;
+    }
+
+    public TagsDto getTagsDto() {
+        return tagsDto;
+    }
+
+    public void setTagsDto(TagsDto tagsDto) {
+        this.tagsDto = tagsDto;
+    }
+
+    public Set<PostTag> getPostTags() {
+        return postTags;
+    }
+
+    public void setPostTags(Set<PostTag> postTags) {
+        this.postTags = postTags;
     }
 }
