@@ -78,9 +78,9 @@
               <a th:href="@{'/post/' + ${post.id}}"><img class="img-responsive" th:src="'data:image/jpeg;base64,'+${post.base64image}"></a>
               <br />
               <div class="mt-2">
-                  <a class="text-dark" href="#">x point s</a>
+                  <a class="text-dark" href="#">x points</a>
                   <label>|</label>
-                  <a class="text-dark" th:href="@{'/post/' + ${post.id} + '#comments'}">x comments</a>
+                  <a class="text-dark" th:href="@{'/post/' + ${post.id} + '#comments'}" th:text="${post.comments.size()} + ' comments'">Comments Amount</a>
               </div>
                 <div>
                     <a th:href="@{'/tags/' + ${postTag.tag.tagName}}" class="badge badge-secondary mr-2 mb-2" th:each="postTag : ${post.postTags}" th:text="${postTag.tag.tagName}"></a>
@@ -91,7 +91,7 @@
                   <button style="width: 12%" class="btn btn-secondary" href="#"><i class="fas fa-comments fa-fw"></i></button>
                   <div class="float-right mr-5">
                     <a sec:authorize="hasRole('ADMIN')" th:if="${!post.accepted}" role="button" class="btn btn-danger text-right" th:href="@{'/accept/' + ${post.id}}">Accept</a>
-                    <a sec:authorize="hasRole('ADMIN')" role="button" class="btn btn-danger text-right" th:href="@{'/delete/' + ${post.id}}">Delete</a>
+                    <a sec:authorize="hasRole('ADMIN')" role="button" class="btn btn-danger text-right" th:href="@{'/delete/post/' + ${post.id}}">Delete</a>
                   </div>
               </div>
             </div>

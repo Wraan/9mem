@@ -77,8 +77,6 @@
                 </div>
                 <div class="my-2">
                     <a class="text-dark">x points</a>
-                    <label>|</label>
-                    <a class="text-dark" href="#comments">x comments</a>
                 </div>
                 <div>
                     <button style="width: 12%" class="btn btn-secondary" href="#"><i class="fas fa-arrow-circle-up fa-fw"></i></button>
@@ -86,49 +84,38 @@
                     <button style="width: 12%" class="btn btn-secondary" href="#"><i class="fas fa-comments fa-fw"></i></button>
                     <div class="float-right mr-5">
                         <a sec:authorize="hasRole('ADMIN')" th:if="*{!accepted}" role="button" class="btn btn-danger text-center" th:href="@{'/accept/' + ${post.id}}">Accept</a>
-                        <a sec:authorize="hasRole('ADMIN')"  role="button" class="btn btn-danger text-center" th:href="@{'/delete/' + ${post.id}}">Delete</a>
+                        <a sec:authorize="hasRole('ADMIN')"  role="button" class="btn btn-danger text-center" th:href="@{'/delete/post/' + ${post.id}}">Delete</a>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-10 offset-1">
-            <h5 id="comments">x Comments</h5>
+            <h5 id="comments" th:text="${post.comments.size()} + ' Comments'">Comments amount</h5>
             <hr class="my-3">
             <div sec:authorize="isAuthenticated()" class="form-group">
-                <label for="comment">Comment:</label>
-                <textarea class="form-control" rows="5" id="comment"></textarea>
-                <a style="width: 12%" role="button" class="btn btn-primary text-center" href="#">Submit</a>
+                <form th:method="post" th:action="@{/submitComment}">
+                    <input type="hidden" name="postId" th:value="${post.id}">
+                    <label for="comment">Comment:</label>
+                    <textarea name="text" class="form-control" rows="5" id="comment"></textarea>
+                    <button style="width: 12%" class="btn btn-primary text-center" type="submit">Submit</button>
+                </form>
             </div>
-            <div class="mb-3">
-                <div class="col-1">
-                    <img style="width: 100%" src="https://scontent-waw1-1.xx.fbcdn.net/v/t1.0-9/1525012_572372122838819_575621846_n.jpg?_nc_eui2=v1%3AAeFOuRBR3Eezd5UyVuteHiTIO68H8KyutFxvQIFKcgUqtwugxLHBiR8kY8U6ChsmDG9sBdo6J_ySb4p4xCvyXpyUgfNaW9gr2xWcWw-2UBNaWA&oh=8122b73dc46f14daf77ee98dc3b34646&oe=5B321D2F"
-                         class="rounded float-left">
-                </div>
+            <div th:each="comment : ${post.comments}" class="mb-3">
+                <!--<div class="col-1">-->
+                    <!--<img style="width: 100%" src="https://scontent-waw1-1.xx.fbcdn.net/v/t1.0-9/1525012_572372122838819_575621846_n.jpg?_nc_eui2=v1%3AAeFOuRBR3Eezd5UyVuteHiTIO68H8KyutFxvQIFKcgUqtwugxLHBiR8kY8U6ChsmDG9sBdo6J_ySb4p4xCvyXpyUgfNaW9gr2xWcWw-2UBNaWA&oh=8122b73dc46f14daf77ee98dc3b34646&oe=5B321D2F"-->
+                         <!--class="rounded float-left">-->
+                <!--</div>-->
                 <div class="col-9 offset-1">
-                    <a href="#" class="">Wran</a>
+                    <a href="#" class="" th:text="${comment.user.username}">Author</a>
                     <label>0 points</label>
-                    <p>I live in China: where the homeless accept mobile payments...I live in China: where the homeless accept mobile payments...I live in China: where the homeless accept mobile payments...I live in China: where the homeless accept mobile payments...I live in China: where the homeless accept mobile payments...I live in China: where the homeless accept mobile payments...I live in China: where the homeless accept mobile payments...I live in China: where the homeless accept mobile payments...I live in China: where the homeless accept mobile payments...</p>
+                    <p th:text="${comment.text}">Text</p>
                     <button style="width: 8%" class="btn btn-secondary" href="#"><i class="fas fa-arrow-circle-up fa-fw"></i></button>
                     <button style="width: 8%" class="btn btn-secondary" href="#"><i class="fas fa-arrow-circle-down fa-fw"></i></button>
+                    <div class="float-right mr-5">
+                        <a sec:authorize="hasRole('ADMIN')"  role="button" class="btn btn-danger text-center" th:href="@{'/delete/comment/' + ${comment.id}}">Delete</a>
+                    </div>
                 </div>
             </div>
-
-            <div class="mb-3">
-                <div class="col-1">
-                    <img style="width: 100%" src="https://scontent-waw1-1.xx.fbcdn.net/v/t1.0-1/p240x240/12310692_776052749169697_2190599738150868054_n.jpg?_nc_eui2=v1%3AAeEjrB3p0QxXDOMx95g_PLImJ1zJVJlGEBoCHAQATto9QHGpMV1-UIUuqItGIZ1P8kgxaQxVlNaODg1ZNQ3mho4BLOlT5MM2nAa-8mkQqIUPcw&oh=c0630f5e7f7725b14cf04fb2b7f92cdc&oe=5B37BFAE"
-                         class="rounded float-left">
-                </div>
-                <div class="col-9 offset-1">
-                    <a href="#" class="">Swistak</a>
-                    <label>0 points</label>
-                    <p>I live in China: where the homeless accept mobile payments...I live in China: where the homeless accept mobile payments...I live in China: where the homeless accept mobile payments...I live in China: where the homeless accept mobile payments...I live in China: where the homeless accept mobile payments...I live in China: where the homeless accept mobile payments...I live in China: where the homeless accept mobile payments...I live in China: where the homeless accept mobile payments...I live in China: where the homeless accept mobile payments...</p>
-                    <button style="width: 8%" class="btn btn-secondary" href="#"><i class="fas fa-arrow-circle-up fa-fw"></i></button>
-                    <button style="width: 8%" class="btn btn-secondary" href="#"><i class="fas fa-arrow-circle-down fa-fw"></i></button>
-                </div>
-            </div>
-
-
-
         </div>
 
     </div>

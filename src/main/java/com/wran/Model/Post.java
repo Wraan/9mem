@@ -29,6 +29,9 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<PostTag> postTags = new HashSet<>();
 
+    @OneToMany(mappedBy = "post", cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH, CascadeType.REMOVE}, orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<Comment> comments = new HashSet<>();
+
 
     public byte[] getImage() {
         return image;
@@ -76,5 +79,13 @@ public class Post {
 
     public void setPostTags(Set<PostTag> postTags) {
         this.postTags = postTags;
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
     }
 }

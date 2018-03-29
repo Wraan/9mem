@@ -55,7 +55,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String[] LOGGED_MATCHERS = {
             "/uploadPost",
-            "/postUploadedSuccessfully"
+            "/postUploadedSuccessfully",
+
     };
 
     private static final String[] ADMIN_MATCHERS = {

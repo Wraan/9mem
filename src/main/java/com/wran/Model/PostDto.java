@@ -19,6 +19,8 @@ public class PostDto {
     private TagsDto tagsDto;
     private Set<PostTag> postTags;
 
+    private Set<Comment> comments;
+
     public String getBase64image() {
         return base64image;
     }
@@ -83,5 +85,13 @@ public class PostDto {
 
     public void setPostTags(Set<PostTag> postTags) {
         this.postTags = postTags;
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
     }
 }

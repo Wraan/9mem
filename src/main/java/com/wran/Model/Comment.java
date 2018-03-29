@@ -12,7 +12,16 @@ public class Comment {
     @Column(name = "comment_id")
     private Long id;
 
-    private Long user_id;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "post_id")
+    private Post post;
+
+    @Lob
+    private String text;
 
     //private Clob text;
 
@@ -24,15 +33,28 @@ public class Comment {
         this.id = id;
     }
 
-    public Long getUser_id() {
-        return user_id;
+
+    public Post getPost() {
+        return post;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setPost(Post post) {
+        this.post = post;
     }
 
+    public User getUser() {
+        return user;
+    }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
 
+    public String getText() {
+        return text;
+    }
 
+    public void setText(String text) {
+        this.text = text;
+    }
 }

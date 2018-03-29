@@ -50,11 +50,16 @@ public class TagServiceImpl implements TagService {
     private Set<Tag> getUniqueTags(TagsDto tagsDto){
         Set<String> strings = new HashSet<>();
 
-        strings.add(tagsDto.getTag1().trim());
-        strings.add(tagsDto.getTag2().trim());
-        strings.add(tagsDto.getTag3().trim());
-        strings.add(tagsDto.getTag4().trim());
-        strings.add(tagsDto.getTag5().trim());
+        if(!tagsDto.getTag1().trim().equals(""))
+            strings.add(tagsDto.getTag1().trim());
+        if(!tagsDto.getTag2().trim().equals(""))
+            strings.add(tagsDto.getTag2().trim());
+        if(!tagsDto.getTag3().trim().equals(""))
+            strings.add(tagsDto.getTag3().trim());
+        if(!tagsDto.getTag4().trim().equals(""))
+            strings.add(tagsDto.getTag4().trim());
+        if(!tagsDto.getTag5().trim().equals(""))
+            strings.add(tagsDto.getTag5().trim());
 
         Set<Tag> tags = new HashSet<>();
 

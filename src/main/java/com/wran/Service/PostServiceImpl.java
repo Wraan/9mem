@@ -1,5 +1,6 @@
 package com.wran.Service;
 
+import com.wran.Model.Comment;
 import com.wran.Model.PageNavigator;
 import com.wran.Model.Post;
 import com.wran.Model.PostDto;
@@ -91,15 +92,6 @@ public class PostServiceImpl implements PostService {
         List<PostDto> postDtoList = new ArrayList<>();
 
         for (Post post : postList) {
-//            PostDto postDto = new PostDto();
-//
-//            postDto.setAuthor(post.getUser().getUsername());
-//            postDto.setTitle(post.getTitle());
-//            postDto.setBase64image(new String(Base64.encodeBase64(post.getImage())));
-//            postDto.setId(post.getId());
-//            postDto.setAccepted(post.isAccepted());
-//            postDto.setPostTags(post.getPostTags());
-
             postDtoList.add(convertPostToDto(post));
         }
         return postDtoList;
@@ -114,6 +106,7 @@ public class PostServiceImpl implements PostService {
         postDto.setAuthor(post.getUser().getUsername());
         postDto.setBase64image(new String(Base64.encodeBase64(post.getImage())));
         postDto.setPostTags(post.getPostTags());
+        postDto.setComments(post.getComments());
 
         return postDto;
     }
@@ -131,6 +124,7 @@ public class PostServiceImpl implements PostService {
         int i = id - 5;
         if (i < 1) i = 1;
 
+        //Previous
         if (id != 1) {
             PageNavigator prev = new PageNavigator();
 
@@ -154,6 +148,7 @@ public class PostServiceImpl implements PostService {
             list.add(pn);
             i++;
         }
+        //Next
         PageNavigator next = new PageNavigator();
 
         next.setCurrent(false);
