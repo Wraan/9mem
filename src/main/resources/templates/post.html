@@ -77,7 +77,6 @@
                 </div>
                 <div class="my-2">
                     <a th:id="'postVotePoints' + ${post.id}" class="text-dark points">Points</a>
-                    <!--th:text="${post.votes} + ' points'"-->
                 </div>
                 <div>
                     <form style="display: inline-block" th:action="@{'/voteUp/post/' + ${post.id}}" th:method="post">

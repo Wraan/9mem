@@ -50,14 +50,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/error/**",
             "/console/**",
             "/login",
-            "/register"
+            "/register",
+            "/page/**",
+            "/new",
+            "/new/**",
+            "/searchTag",
+            "/tag/**",
+            "/post/**",
+            "/post",
+            "/voteUp/**",
+            "/voteDown/**",
+            "/api/votesValue"
     };
 
     private static final String[] LOGGED_MATCHERS = {
             "/uploadPost",
             "/postUploadedSuccessfully",
             "/voteUp/**",
-            "/voteDown/**"
+            "/voteDown/**",
+            "/submitComment",
+            "/api/userVote/**"
 
     };
 
@@ -73,6 +85,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(ADMIN_MATCHERS).hasRole("ADMIN")
                 .antMatchers(LOGGED_MATCHERS).hasAnyRole("ADMIN", "USER")
+                .antMatchers(PUBLIC_MATCHERS).permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/login")
