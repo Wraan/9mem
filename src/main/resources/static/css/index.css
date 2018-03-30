@@ -15,3 +15,9 @@ body {
 nav.ul a:hover{
     text-decoration: none !important;
 }
+.anchor{
+    display: block;
+    height: 45px; /*same height as header*/
+    margin-top: -45px; /*same height as header*/
+    visibility: hidden;
+}

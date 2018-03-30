@@ -21,6 +21,8 @@ public class PostDto {
 
     private Set<Comment> comments;
 
+    private int userVote;
+
     public String getBase64image() {
         return base64image;
     }
@@ -93,5 +95,13 @@ public class PostDto {
 
     public void setComments(Set<Comment> comments) {
         this.comments = comments;
+    }
+
+    public int getUserVote() {
+        return userVote;
+    }
+
+    public void setUserVote(int userVote) {
+        this.userVote = userVote;
     }
 }

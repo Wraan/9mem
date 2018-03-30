@@ -9,7 +9,7 @@ public class PostTag {
     @Id
     @GeneratedValue
     @Column(name = "post_tag_id", unique = true, nullable = false)
-    private Long id;
+    private long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "post_id")

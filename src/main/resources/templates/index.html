@@ -71,24 +71,28 @@
       <div class="header col-7 ">
           <h1>Looking for some memes?</h1>
 
-          <div th:each="post : ${posts}">
-            <div class="text-left crop">
-              <hr class="my-3">
-              <h4 class=""><a class="text-dark" th:href="@{'/post/' + ${post.id}}" th:text="${post.title}">Title</a></h4>
-              <a th:href="@{'/post/' + ${post.id}}"><img class="img-responsive" th:src="'data:image/jpeg;base64,'+${post.base64image}"></a>
-              <br />
-              <div class="mt-2">
-                  <a class="text-dark" href="#">x points</a>
+          <div  th:each="post : ${posts}">
+              <span class="anchor" th:id="'post' + ${post.id}"></span>
+              <div th:id="'post' + ${post.id}" class="text-left crop">
+                <hr class="my-3">
+                <h4 class=""><a class="text-dark" th:href="@{'/post/' + ${post.id}}" th:text="${post.title}">Title</a></h4>
+                <a th:href="@{'/post/' + ${post.id}}"><img class="img-responsive" th:src="'data:image/jpeg;base64,'+${post.base64image}"></a>
+                <br />
+                <div class="mt-2">
+                  <a th:id="'postVotePoints' + ${post.id}" class="text-dark points">Points</a>
                   <label>|</label>
                   <a class="text-dark" th:href="@{'/post/' + ${post.id} + '#comments'}" th:text="${post.comments.size()} + ' comments'">Comments Amount</a>
-              </div>
+                </div>
                 <div>
                     <a th:href="@{'/tags/' + ${postTag.tag.tagName}}" class="badge badge-secondary mr-2 mb-2" th:each="postTag : ${post.postTags}" th:text="${postTag.tag.tagName}"></a>
                 </div>
-              <div class="text-left">
-                  <button style="width: 12%" class="btn btn-secondary" href="#"><i class="fas fa-arrow-circle-up fa-fw"></i></button>
-                  <button style="width: 12%" class="btn btn-secondary" href="#"><i class="fas fa-arrow-circle-down fa-fw"></i></button>
-                  <button style="width: 12%" class="btn btn-secondary" href="#"><i class="fas fa-comments fa-fw"></i></button>
+                <div class="text-left">
+                  <form style="display: inline-block" th:action="@{'/voteUp/post/' + ${post.id}}" th:method="post">
+                      <button sec:authorize="isAuthenticated()" th:id="'voteUp' + ${post.id}" class="btn voteUp"><i class="fas fa-arrow-circle-up fa-fw"></i></button>
+                  </form>
+                  <form style="display: inline-block" th:action="@{'/voteDown/post/' + ${post.id}}" th:method="post">
+                      <button sec:authorize="isAuthenticated()" th:id="'voteDown' + ${post.id}" class="btn voteDown"><i class="fas fa-arrow-circle-down fa-fw"></i></button>
+                  </form>
                   <div class="float-right mr-5">
                     <a sec:authorize="hasRole('ADMIN')" th:if="${!post.accepted}" role="button" class="btn btn-danger text-right" th:href="@{'/accept/' + ${post.id}}">Accept</a>
                     <a sec:authorize="hasRole('ADMIN')" role="button" class="btn btn-danger text-right" th:href="@{'/delete/post/' + ${post.id}}">Delete</a>
@@ -116,5 +120,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="/js/jquery.min.js"><\/script>')</script>
     <script src="/js/bootstrap.js"></script>
+    <script src="/js/votePoints.js"></script>
   </body>
 </html>

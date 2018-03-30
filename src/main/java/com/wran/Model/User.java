@@ -15,7 +15,7 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue
     @Column(name = "user_id", unique = true, nullable = false)
-    private Long id;
+    private long id;
 
     private String username;
 
@@ -34,6 +34,12 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH, CascadeType.REMOVE}, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Comment> comments = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH, CascadeType.REMOVE}, orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<PostVote> postVotes = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH, CascadeType.REMOVE}, orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<CommentVote> commentVotes = new HashSet<>();
 
     public User() {
     }
@@ -129,5 +135,21 @@ public class User implements UserDetails {
 
     public void setComments(Set<Comment> comments) {
         this.comments = comments;
+    }
+
+    public Set<PostVote> getPostVotes() {
+        return postVotes;
+    }
+
+    public void setPostVotes(Set<PostVote> postVotes) {
+        this.postVotes = postVotes;
+    }
+
+    public Set<CommentVote> getCommentVotes() {
+        return commentVotes;
+    }
+
+    public void setCommentVotes(Set<CommentVote> commentVotes) {
+        this.commentVotes = commentVotes;
     }
 }

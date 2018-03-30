@@ -2,6 +2,8 @@ package com.wran.Model;
 
 import javax.persistence.*;
 import java.sql.Clob;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "comments")
@@ -10,7 +12,7 @@ public class Comment {
     @Id
     @GeneratedValue
     @Column(name = "comment_id")
-    private Long id;
+    private long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
@@ -23,7 +25,8 @@ public class Comment {
     @Lob
     private String text;
 
-    //private Clob text;
+    @OneToMany(mappedBy = "comment", cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH, CascadeType.REMOVE}, orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<CommentVote> commentVotes = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -56,5 +59,13 @@ public class Comment {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public Set<CommentVote> getCommentVotes() {
+        return commentVotes;
+    }
+
+    public void setCommentVotes(Set<CommentVote> commentVotes) {
+        this.commentVotes = commentVotes;
     }
 }

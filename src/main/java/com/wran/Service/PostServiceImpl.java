@@ -1,6 +1,5 @@
 package com.wran.Service;
 
-import com.wran.Model.Comment;
 import com.wran.Model.PageNavigator;
 import com.wran.Model.Post;
 import com.wran.Model.PostDto;
@@ -26,6 +25,9 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     TagService tagService;
+
+    @Autowired
+    VoteService voteService;
 
     public Post findById(long id) {
         return postRepository.findById(id);

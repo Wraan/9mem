@@ -68,7 +68,7 @@
 
         </div>
         <div class="header col-8 ">
-            <div th:object="${post}" class="text-left crop">
+            <div th:id="'post' + ${post.id}" th:object="${post}" class="text-left crop">
                 <h4 class="text-dark" th:text="*{title}">Title</h4>
                 <img class="img-responsive" th:src="'data:image/jpeg;base64,' + *{base64image}">
                 <p class="text-dark mt-3" th:text="'Author: ' + *{author}">Author</p>
@@ -76,12 +76,16 @@
                     <a th:href="@{'/tags/' + ${postTag.tag.tagName}}" class="badge badge-secondary mr-2 mb-2" th:each="postTag : ${post.postTags}" th:text="${postTag.tag.tagName}"></a>
                 </div>
                 <div class="my-2">
-                    <a class="text-dark">x points</a>
+                    <a th:id="'postVotePoints' + ${post.id}" class="text-dark points">Points</a>
+                    <!--th:text="${post.votes} + ' points'"-->
                 </div>
                 <div>
-                    <button style="width: 12%" class="btn btn-secondary" href="#"><i class="fas fa-arrow-circle-up fa-fw"></i></button>
-                    <button style="width: 12%" class="btn btn-secondary" href="#"><i class="fas fa-arrow-circle-down fa-fw"></i></button>
-                    <button style="width: 12%" class="btn btn-secondary" href="#"><i class="fas fa-comments fa-fw"></i></button>
+                    <form style="display: inline-block" th:action="@{'/voteUp/post/' + ${post.id}}" th:method="post">
+                        <button sec:authorize="isAuthenticated()" th:id="'voteUp' + ${post.id}" class="btn voteUp"><i class="fas fa-arrow-circle-up fa-fw"></i></button>
+                    </form>
+                    <form style="display: inline-block" th:action="@{'/voteDown/post/' + ${post.id}}" th:method="post">
+                        <button sec:authorize="isAuthenticated()" th:id="'voteDown' + ${post.id}" class="btn voteDown"><i class="fas fa-arrow-circle-down fa-fw"></i></button>
+                    </form>
                     <div class="float-right mr-5">
                         <a sec:authorize="hasRole('ADMIN')" th:if="*{!accepted}" role="button" class="btn btn-danger text-center" th:href="@{'/accept/' + ${post.id}}">Accept</a>
                         <a sec:authorize="hasRole('ADMIN')"  role="button" class="btn btn-danger text-center" th:href="@{'/delete/post/' + ${post.id}}">Delete</a>
@@ -100,17 +104,18 @@
                     <button style="width: 12%" class="btn btn-primary text-center" type="submit">Submit</button>
                 </form>
             </div>
-            <div th:each="comment : ${post.comments}" class="mb-3">
-                <!--<div class="col-1">-->
-                    <!--<img style="width: 100%" src="https://scontent-waw1-1.xx.fbcdn.net/v/t1.0-9/1525012_572372122838819_575621846_n.jpg?_nc_eui2=v1%3AAeFOuRBR3Eezd5UyVuteHiTIO68H8KyutFxvQIFKcgUqtwugxLHBiR8kY8U6ChsmDG9sBdo6J_ySb4p4xCvyXpyUgfNaW9gr2xWcWw-2UBNaWA&oh=8122b73dc46f14daf77ee98dc3b34646&oe=5B321D2F"-->
-                         <!--class="rounded float-left">-->
-                <!--</div>-->
+            <div th:id="'comment' + ${comment.id}" th:each="comment : ${post.comments}" class="mb-3">
+                <span class="anchor" th:id="'comment' + ${comment.id}"></span>
                 <div class="col-9 offset-1">
                     <a href="#" class="" th:text="${comment.user.username}">Author</a>
-                    <label>0 points</label>
+                    <a th:id="'commentVotePoints' + ${comment.id}" class="points">Points</a>
                     <p th:text="${comment.text}">Text</p>
-                    <button style="width: 8%" class="btn btn-secondary" href="#"><i class="fas fa-arrow-circle-up fa-fw"></i></button>
-                    <button style="width: 8%" class="btn btn-secondary" href="#"><i class="fas fa-arrow-circle-down fa-fw"></i></button>
+                    <form style="display: inline-block" th:action="@{'/voteUp/comment/' + ${comment.id}}" th:method="post">
+                        <button sec:authorize="isAuthenticated()" th:id="'voteUp' + ${comment.id}" class="btn voteUp"><i class="fas fa-arrow-circle-up fa-fw"></i></button>
+                    </form>
+                    <form style="display: inline-block" th:action="@{'/voteDown/comment/' + ${comment.id}}" th:method="post">
+                        <button sec:authorize="isAuthenticated()" th:id="'voteDown' + ${comment.id}" class="btn voteDown"><i class="fas fa-arrow-circle-down fa-fw"></i></button>
+                    </form>
                     <div class="float-right mr-5">
                         <a sec:authorize="hasRole('ADMIN')"  role="button" class="btn btn-danger text-center" th:href="@{'/delete/comment/' + ${comment.id}}">Delete</a>
                     </div>
@@ -129,5 +134,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="/js/jquery.min.js"><\/script>')</script>
 <script src="/js/bootstrap.js"></script>
+<script src="/js/votePoints.js"></script>
 </body>
 </html>
