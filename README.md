@@ -1,2 +1,4 @@
 # 9mem
-Spring application  - copy of 9GAG
+Copy of 9GAG
+Spring MVC/Security
+Thymeleaf
